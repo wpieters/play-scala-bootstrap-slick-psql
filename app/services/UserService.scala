@@ -1,6 +1,6 @@
 package services
 
-import model.{User, Users}
+import models.{User, Users}
 import scala.concurrent.Future
 
 object UserService {
