@@ -1,6 +1,6 @@
 enablePlugins(JavaAppPackaging, UniversalDeployPlugin, DockerPlugin)
 
-name := """play-scala-tutorials"""
+name := """play-scala-bootstrap-slick-psql"""
 
 version := "1.0-SNAPSHOT"
 
@@ -24,7 +24,8 @@ libraryDependencies ++= Seq(
   "com.typesafe.play" %% "play-slick" % playSlickVersion,
   "com.typesafe.play" %% "play-slick-evolutions" % playSlickVersion,
 //  "com.typesafe.slick" %% "slick-hikaricp" % slickVersion,
-  "org.postgresql" % "postgresql" % postgresVersion
+  "org.postgresql" % "postgresql" % postgresVersion,
+  specs2 % Test
 )
 
 instrumentSettings

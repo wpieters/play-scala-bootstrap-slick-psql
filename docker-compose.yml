@@ -10,8 +10,9 @@ services:
       - "5432:5432"
     hostname: db
   app:
-    image: play-scala-tutorials:0.1-SNAPSHOT
+    image: play-scala-bootstrap-slick-psql:1.0-SNAPSHOT
     links:
       - db
     ports:
       - "9000:9000"
+    command: "-Dslick.dbs.default.db.url='jdbc:postgresql://db:5432/postgres'"
