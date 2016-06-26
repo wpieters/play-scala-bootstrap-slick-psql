@@ -29,7 +29,8 @@ libraryDependencies ++= Seq(
   "jp.t2v" %% "play2-auth-social" % "0.14.2",
   "jp.t2v" %% "play2-auth-test" % "0.14.2" % "test",
   "org.mindrot" % "jbcrypt" % "0.3m",
-  specs2 % Test
+  specs2 % Test,
+  "com.h2database" % "h2" % "1.4.192" % Test
 )
 
 instrumentSettings

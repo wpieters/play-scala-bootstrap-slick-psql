@@ -1,10 +1,10 @@
 # --- !Ups
 CREATE TABLE "account" (
-  "id" SERIAL PRIMARY KEY,
-  "email" TEXT NOT NULL,
-  "password" TEXT NOT NULL,
-  "name" TEXT NOT NULL,
-  "role" TEXT NOT NULL
+  id SERIAL PRIMARY KEY,
+  email TEXT NOT NULL,
+  password TEXT NOT NULL,
+  name TEXT NOT NULL,
+  role TEXT NOT NULL
 );
 
 INSERT INTO "account" (email, password, name, role) VALUES ('alice@example.com', '$2a$10$.7WiVwnfmROXvphMK64c9uz9.na1zulVszM0Z1v9O3UhuV.lj.Cs2', 'Alice', 'Administrator');

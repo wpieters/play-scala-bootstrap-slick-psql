@@ -4,8 +4,8 @@ import org.junit.runner._
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test._
 import play.api.test.Helpers._
-import scala.concurrent.duration._
 
+import scala.concurrent.duration._
 import scala.concurrent.Await
 
 /**
@@ -14,13 +14,11 @@ import scala.concurrent.Await
  * For more information, consult the wiki.
  */
 @RunWith(classOf[JUnitRunner])
-class ApplicationSpec extends Specification {
-
-  def appWithMemoryDatabase = new GuiceApplicationBuilder().configure(inMemoryDatabase("postgres")).build()
+class ApplicationSpec extends Specification with InMemoryDB {
 
   "Application" should {
 
-    "send 404 on a bad request" in new WithApplication(appWithMemoryDatabase) {
+    "send 404 on a bad request" in new WithApplication(app = appWithMemoryDatabase) {
       val error = Await.result(route(FakeRequest(GET, "/boum")).get, 10 seconds)
       error.header.status shouldEqual 404
     }
