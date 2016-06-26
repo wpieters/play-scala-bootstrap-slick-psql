@@ -2,7 +2,7 @@ package controllers
 
 import controllers.security.AuthConfigImpl
 import jp.t2v.lab.play2.auth.{AuthElement, LoginLogout}
-import models.Role.NormalUser
+import models.Role.{Administrator, NormalUser}
 import models.{Person, PersonForm}
 import play.api.mvc._
 
@@ -23,7 +23,7 @@ class Application extends Controller with AuthElement with AuthConfigImpl {
     }
   }
 
-  def addUser() = AsyncStack(AuthorityKey -> NormalUser) { implicit request =>
+  def addUser() = AsyncStack(AuthorityKey -> Administrator) { implicit request =>
     PersonForm.form.bindFromRequest.fold(
       // if any error in submitted data
       errorForm => Future.successful(Ok(views.html.persons(errorForm, Seq.empty[Person]))),
@@ -35,7 +35,7 @@ class Application extends Controller with AuthElement with AuthConfigImpl {
       })
   }
 
-  def deleteUser(id: Long) = AsyncStack(AuthorityKey -> NormalUser) { implicit request =>
+  def deleteUser(id: Long) = AsyncStack(AuthorityKey -> Administrator) { implicit request =>
     PersonService.deleteUser(id) map { res =>
       Redirect(routes.Application.users())
     }
