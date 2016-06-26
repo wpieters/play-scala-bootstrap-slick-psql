@@ -1,7 +1,7 @@
 import org.specs2.mutable._
 import org.specs2.runner._
 import org.junit.runner._
-
+import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test._
 import play.api.test.Helpers._
 
@@ -13,13 +13,15 @@ import play.api.test.Helpers._
 @RunWith(classOf[JUnitRunner])
 class ApplicationSpec extends Specification {
 
+  def appWithMemoryDatabase = new GuiceApplicationBuilder().configure(inMemoryDatabase("postgres")).build()
+
   "Application" should {
 
-    "send 404 on a bad request" in new WithApplication{
+    "send 404 on a bad request" in new WithApplication(appWithMemoryDatabase) {
       route(FakeRequest(GET, "/boum")) must beNone
     }
 
-    "render the index page" in new WithApplication{
+    "render the index page" in new WithApplication(appWithMemoryDatabase) {
       val home = route(FakeRequest(GET, "/")).get
 
       status(home) must equalTo(OK)

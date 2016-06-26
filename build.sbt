@@ -25,6 +25,10 @@ libraryDependencies ++= Seq(
   "com.typesafe.play" %% "play-slick-evolutions" % playSlickVersion,
 //  "com.typesafe.slick" %% "slick-hikaricp" % slickVersion,
   "org.postgresql" % "postgresql" % postgresVersion,
+  "jp.t2v" %% "play2-auth" % "0.14.2",
+  "jp.t2v" %% "play2-auth-social" % "0.14.2",
+  "jp.t2v" %% "play2-auth-test" % "0.14.2" % "test",
+  "org.mindrot" % "jbcrypt" % "0.3m",
   specs2 % Test
 )
 

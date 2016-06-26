@@ -9,11 +9,11 @@ import slick.driver.JdbcProfile
 import slick.driver.PostgresDriver.api._
 import scala.concurrent.ExecutionContext.Implicits.global
 
-case class User(id: Long, firstName: String, lastName: String, mobile: Long, email: String)
+case class Person(id: Long, firstName: String, lastName: String, mobile: Long, email: String)
 
-case class UserFormData(firstName: String, lastName: String, mobile: Long, email: String)
+case class PersonFormData(firstName: String, lastName: String, mobile: Long, email: String)
 
-object UserForm {
+object PersonForm {
 
   val form = Form(
     mapping(
@@ -21,11 +21,11 @@ object UserForm {
       "lastName" -> nonEmptyText,
       "mobile" -> longNumber,
       "email" -> email
-    )(UserFormData.apply)(UserFormData.unapply)
+    )(PersonFormData.apply)(PersonFormData.unapply)
   )
 }
 
-class UserTableDef(tag: Tag) extends Table[User](tag, "user") {
+class PersonTableDef(tag: Tag) extends Table[Person](tag, "person") {
 
   def id = column[Long]("id", O.PrimaryKey,O.AutoInc)
   def firstName = column[String]("first_name")
@@ -34,31 +34,31 @@ class UserTableDef(tag: Tag) extends Table[User](tag, "user") {
   def email = column[String]("email")
 
   override def * =
-    (id, firstName, lastName, mobile, email) <>(User.tupled, User.unapply)
+    (id, firstName, lastName, mobile, email) <>(Person.tupled, Person.unapply)
 }
 
-object Users {
+object Persons {
 
   val dbConfig = DatabaseConfigProvider.get[JdbcProfile](Play.current)
 
-  val users = TableQuery[UserTableDef]
+  val persons = TableQuery[PersonTableDef]
 
-  def add(user: User): Future[String] = {
-    dbConfig.db.run(users += user).map(res => "User successfully added").recover {
+  def add(person: Person): Future[String] = {
+    dbConfig.db.run(persons += person).map(res => "User successfully added").recover {
       case ex: Exception => ex.getCause.getMessage
     }
   }
 
   def delete(id: Long): Future[Int] = {
-    dbConfig.db.run(users.filter(_.id === id).delete)
+    dbConfig.db.run(persons.filter(_.id === id).delete)
   }
 
-  def get(id: Long): Future[Option[User]] = {
-    dbConfig.db.run(users.filter(_.id === id).result.headOption)
+  def get(id: Long): Future[Option[Person]] = {
+    dbConfig.db.run(persons.filter(_.id === id).result.headOption)
   }
 
-  def listAll: Future[Seq[User]] = {
-    dbConfig.db.run(users.result)
+  def listAll: Future[Seq[Person]] = {
+    dbConfig.db.run(persons.result)
   }
 
 }
