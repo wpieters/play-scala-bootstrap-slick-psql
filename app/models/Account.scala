@@ -2,6 +2,8 @@ package models
 
 import org.mindrot.jbcrypt.BCrypt
 import play.api.Play
+import play.api.data.Form
+import play.api.data.Forms._
 import play.api.db.slick.DatabaseConfigProvider
 
 import scala.concurrent.{Await, Future}
@@ -10,10 +12,21 @@ import slick.driver.JdbcProfile
 import slick.driver.PostgresDriver.api._
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.util.{Failure, Success}
 
 case class Account(id: Long, email: String, password: String, name: String, role: String) {
   def withPassword(password: String) = copy(password = password)
+}
+case class AccountFormData(email: String, password: String, name: String, role: String)
+
+object AccountForm {
+  val form = Form(
+    mapping(
+      "Email" -> nonEmptyText,
+      "Password" -> nonEmptyText,
+      "Name" -> nonEmptyText,
+      "Role" -> nonEmptyText
+    )(AccountFormData.apply)(AccountFormData.unapply)
+  )
 }
 
 class AccountTableDef(tag: Tag) extends Table[Account](tag, "account") {
@@ -52,10 +65,6 @@ object Accounts {
     dbConfig.db.run(accounts += account.withPassword(pass)).map(res => "Account successfully added").recover {
       case ex: Exception => ex.getCause.getMessage
     }
-  }
-
-  def get(id: Long): Future[Option[Account]] = {
-    dbConfig.db.run(accounts.filter(_.id === id).result.headOption)
   }
 
   def listAll: Future[Seq[Account]] = {

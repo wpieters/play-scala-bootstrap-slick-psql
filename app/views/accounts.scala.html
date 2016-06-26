@@ -1,0 +1,12 @@
+@(accountForm: Form[models.AccountFormData])(implicit messages: Messages)
+@import helper._
+
+@main("Accounts"){
+    @form(routes.Application.addAccount(), 'class -> "form-horizontal") {
+        @inputText(accountForm("Email"))
+        @inputPassword(accountForm("Password"))
+        @inputText(accountForm("Name"))
+        @select(accountForm("Role"), Seq(("Administrator","Administrator"), ("NormalUser","NormalUser")))
+        <input type="submit" value="Submit">
+    }
+}

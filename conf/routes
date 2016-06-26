@@ -4,10 +4,15 @@
 
 # Home page
 GET     /                           controllers.Application.index
+
+# Users
 GET     /users                      controllers.Application.users
 POST    /users/add                  controllers.Application.addUser
 GET     /users/delete/:id           controllers.Application.deleteUser(id : Long)
 
+# Accounts
+GET     /accounts                   controllers.Application.account
+POST    /accounts/add               controllers.Application.addAccount
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

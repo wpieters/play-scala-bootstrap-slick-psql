@@ -3,11 +3,13 @@ package controllers
 import controllers.security.AuthConfigImpl
 import jp.t2v.lab.play2.auth.{AuthElement, LoginLogout}
 import models.Role.{Administrator, NormalUser}
-import models.{Person, PersonForm}
+import models._
 import play.api.mvc._
+import play.api.Play.current
+import play.api.i18n.Messages.Implicits._
 
 import scala.concurrent.Future
-import services.PersonService
+import services.{AccountsService, PersonService}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -39,6 +41,21 @@ class Application extends Controller with AuthElement with AuthConfigImpl {
     PersonService.deleteUser(id) map { res =>
       Redirect(routes.Application.users())
     }
+  }
+
+  def account = StackAction(AuthorityKey -> NormalUser)  { implicit request =>
+    Ok(views.html.accounts(AccountForm.form))
+  }
+
+  def addAccount() = AsyncStack(AuthorityKey -> NormalUser) { implicit request =>
+    AccountForm.form.bindFromRequest().fold(
+      formWithErrors => Future.successful(BadRequest(views.html.accounts(formWithErrors))),
+      data => {
+        val newAccount = Account(0, data.email, data.password, data.name, data.role)
+        AccountsService.addUser(newAccount).map(res =>
+          Redirect(routes.Application.account())
+        )
+      })
   }
 
 }
