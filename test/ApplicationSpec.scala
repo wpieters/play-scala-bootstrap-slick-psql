@@ -4,6 +4,9 @@ import org.junit.runner._
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test._
 import play.api.test.Helpers._
+import scala.concurrent.duration._
+
+import scala.concurrent.Await
 
 /**
  * Add your spec here.
@@ -18,7 +21,8 @@ class ApplicationSpec extends Specification {
   "Application" should {
 
     "send 404 on a bad request" in new WithApplication(appWithMemoryDatabase) {
-      route(FakeRequest(GET, "/boum")) must beNone
+      val error = Await.result(route(FakeRequest(GET, "/boum")).get, 10 seconds)
+      error.header.status shouldEqual 404
     }
 
     "render the index page" in new WithApplication(appWithMemoryDatabase) {

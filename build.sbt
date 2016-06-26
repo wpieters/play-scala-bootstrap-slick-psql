@@ -1,4 +1,4 @@
-enablePlugins(JavaAppPackaging, UniversalDeployPlugin, DockerPlugin)
+enablePlugins(JavaAppPackaging, UniversalDeployPlugin, DockerPlugin, WindowsPlugin)
 
 name := """play-scala-bootstrap-slick-psql"""
 
@@ -18,7 +18,7 @@ libraryDependencies ++= Seq(
   ws,
   "org.webjars" %% "webjars-play" % "2.4.0-2",
   "org.webjars" %	"bootstrap" % "3.1.1-2",
-  "org.webjars" % "bootswatch-darkly" % "3.3.1+2",
+  "org.webjars" % "bootswatch-superhero" % "3.3.1+2",
   "org.webjars" % "html5shiv" % "3.7.0",
   "org.webjars" % "respond" % "1.4.2",
   "com.typesafe.play" %% "play-slick" % playSlickVersion,
@@ -45,6 +45,8 @@ publishArtifact in Test := false
 parallelExecution in Test := false
 
 routesGenerator := InjectedRoutesGenerator
+
+maintainer in Docker := "Wynand Pieters <wynandpieters@gmail.com>"
 
 dockerBaseImage := "anapsix/alpine-java:jre8"
 

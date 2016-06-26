@@ -19,7 +19,7 @@ class IntegrationSpec extends Specification {
 
       browser.goTo("http://localhost:" + port)
 
-      browser.pageSource must contain("Play Scala Tutorials")
+      browser.pageSource must contain("play-scala-bootstrap-slick-psql")
     }
   }
 }

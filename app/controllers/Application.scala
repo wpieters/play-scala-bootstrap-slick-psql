@@ -48,7 +48,7 @@ class Application extends Controller with AuthElement with AuthConfigImpl {
   }
 
   def addAccount() = AsyncStack(AuthorityKey -> NormalUser) { implicit request =>
-    AccountForm.form.bindFromRequest().fold(
+    AccountForm.form.bindFromRequest.fold(
       formWithErrors => Future.successful(BadRequest(views.html.accounts(formWithErrors))),
       data => {
         val newAccount = Account(0, data.email, data.password, data.name, data.role)
