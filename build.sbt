@@ -13,6 +13,8 @@ val playSlickVersion = "1.1.1"
 val slickVersion = "3.1.0"
 val postgresVersion = "9.3-1103-jdbc41"
 
+resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
+
 libraryDependencies ++= Seq(
   cache,
   ws,
