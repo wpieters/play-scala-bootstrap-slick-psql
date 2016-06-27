@@ -29,7 +29,7 @@ It can be run using either `activator` or `sbt`, packaged using the `sbt-native-
 ###Building the Codebase:
 -----------------------------------------------------------------------
 * From the root folder containing the `build.sbt` file, the code can be compiled and tested with `sbt clean compile test`
-    * Note: In this commit, the Unit Tests require a DB to be available, this still needs to be mocked
+    * Note: the application needs PostgreSQL running when using `sbt run` or when deploying the dist, but the unit test will use H2 In-Memory in PostreSQL compatability mode
 * Realtime development can be done using `sbt run` - this allows code to be hot-compiled and updated
     * Note: changes to config and build files should ideally be rebuilt by stopping the application ```Ctrl + D``` and running `sbt clean run`
 * You will need to update the `slick.dbs.default.db` entries in `conf/application.conf` to point to your PostgreSQL installation
