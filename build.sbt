@@ -2,7 +2,7 @@ enablePlugins(JavaAppPackaging, UniversalDeployPlugin, DockerPlugin, WindowsPlug
 
 name := """play-scala-bootstrap-slick-psql"""
 
-version := "1.0-SNAPSHOT"
+version := "0.0.0.1"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
@@ -32,8 +32,16 @@ libraryDependencies ++= Seq(
   "jp.t2v" %% "play2-auth-test" % "0.14.2" % "test",
   "org.mindrot" % "jbcrypt" % "0.3m",
   specs2 % Test,
-  "com.h2database" % "h2" % "1.4.192" % Test
+  "com.h2database" % "h2" % "1.4.192"
 )
+
+mappings in (Windows, packageDoc) := Seq()
+
+mappings in Universal ++=
+  (baseDirectory.value / "scripts" * "*" get) map
+    (x => x -> ("./" + x.getName))
+
+doc in Compile <<= target.map(_ / "none")
 
 instrumentSettings
 
@@ -49,10 +57,18 @@ parallelExecution in Test := false
 
 routesGenerator := InjectedRoutesGenerator
 
-maintainer in Docker := "Wynand Pieters <wynandpieters@gmail.com>"
+maintainer := "Wynand Pieters <wynandpieters@gmail.com>"
 
 dockerBaseImage := "anapsix/alpine-java:jre8"
 
 dockerExposedPorts := Seq(9000)
 
 daemonUser in Docker := "root"
+
+// general package information (can be scoped to Windows)
+packageSummary in Windows := "test-windows"
+packageDescription in Windows := """Test Windows MSI."""
+
+// wix build information
+wixProductId := java.util.UUID.randomUUID().toString
+wixProductUpgradeId := java.util.UUID.randomUUID().toString
