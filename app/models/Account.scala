@@ -1,7 +1,7 @@
 package models
 
 import org.mindrot.jbcrypt.BCrypt
-import play.api.Play
+import play.api.{Logger, Play}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.db.slick.DatabaseConfigProvider
@@ -16,15 +16,16 @@ import scala.concurrent.ExecutionContext.Implicits.global
 case class Account(id: Long, email: String, password: String, name: String, role: String) {
   def withPassword(password: String) = copy(password = password)
 }
-case class AccountFormData(email: String, password: String, name: String, role: String)
+case class AccountFormData(email: String, password: String, name: Option[String], role: String, test: Boolean)
 
 object AccountForm {
   val form = Form(
     mapping(
       "Email" -> nonEmptyText,
       "Password" -> nonEmptyText,
-      "Name" -> nonEmptyText,
-      "Role" -> nonEmptyText
+      "Name" -> optional(text),
+      "Role" -> nonEmptyText,
+      "Test" -> boolean
     )(AccountFormData.apply)(AccountFormData.unapply)
   )
 }
@@ -63,7 +64,7 @@ object Accounts {
   def create(account: Account): Future[String] = {
     val pass = BCrypt.hashpw(account.password, BCrypt.gensalt())
     dbConfig.db.run(accounts += account.withPassword(pass)).map(res => "Account successfully added").recover {
-      case ex: Exception => ex.getCause.getMessage
+      case ex: Exception => Logger.error(ex.getCause.getMessage, ex.getCause);ex.getCause.getMessage
     }
   }
 

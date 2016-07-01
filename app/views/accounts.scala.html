@@ -10,7 +10,7 @@
                     <legend>New Account</legend>
                     <div class="form-group">
                         <div class="col-lg-10">
-                            @inputText(accountForm("Email"), 'class -> "form-control", 'placeholder -> "Email")
+                            @inputText(accountForm("Email"), 'class -> "form-control", 'placeholder -> "Email", 'type -> "hidden")
                         </div>
                     </div>
                     <div class="form-group">
@@ -26,6 +26,11 @@
                     <div class="form-group">
                         <div class="col-lg-10">
                             @select(accountForm("Role"), options(List(Role.Administrator.toString, Role.NormalUser.toString)), 'class -> "form-control")
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-10">
+                            @checkbox(accountForm("Test"), '_showErrors -> false, '_label -> None, '_showConstraints -> false, 'class -> "checkbox")
                         </div>
                     </div>
                     <div class="form-group">
