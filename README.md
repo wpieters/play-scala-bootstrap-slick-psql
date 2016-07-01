@@ -13,6 +13,7 @@ It can be run using either `activator` or `sbt`, packaged using the `sbt-native-
 * [Bootswatch](http://bootswatch.com/)
 * [WebJars](http://www.webjars.org/)
 * [Slick](http://slick.lightbend.com/)
+* [Play2-Auth](https://github.com/t2v/play2-auth)
 * [SBT Native Packager](http://www.scala-sbt.org/sbt-native-packager/)
 * [Docker Toolbox](https://www.docker.com/products/docker-toolbox) for Mac and Windows, or [Docker Engine](https://www.docker.com/products/docker#/servers) for Linux
 * [WIX Tool Set](http://wixtoolset.org/releases/) for Windows MSI
