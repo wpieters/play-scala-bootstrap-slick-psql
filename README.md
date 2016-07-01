@@ -15,8 +15,6 @@ It can be run using either `activator` or `sbt`, packaged using the `sbt-native-
 * [Slick](http://slick.lightbend.com/)
 * [Play2-Auth](https://github.com/t2v/play2-auth)
 * [SBT Native Packager](http://www.scala-sbt.org/sbt-native-packager/)
-* [Docker Toolbox](https://www.docker.com/products/docker-toolbox) for Mac and Windows, or [Docker Engine](https://www.docker.com/products/docker#/servers) for Linux
-* [WIX Tool Set](http://wixtoolset.org/releases/) for Windows MSI
 
 -----------------------------------------------------------------------
 ###Development Requirements:
@@ -27,6 +25,8 @@ It can be run using either `activator` or `sbt`, packaged using the `sbt-native-
 * [Postgres](https://www.postgresql.org/download/)
     * Alternatively, [Virtualbox](https://www.virtualbox.org/wiki/Downloads) and [Vagrant](https://www.vagrantup.com/downloads.html)
     * The steps [here](https://wiki.postgresql.org/wiki/PostgreSQL_For_Development_With_Vagrant#Database_Setup) will show how to setup the DB locally
+* (Optional) [Docker Toolbox](https://www.docker.com/products/docker-toolbox) for Mac and Windows, or [Docker Engine](https://www.docker.com/products/docker#/servers) for Linux
+* (Optional) [WIX Tool Set](http://wixtoolset.org/releases/) for Windows MSI
 
 -----------------------------------------------------------------------
 ###Building the Codebase:
